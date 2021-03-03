@@ -1,0 +1,105 @@
+openapi: "3.0.1"
+info:
+  description: "The tranmere web player builder stack"
+  version: "1.0"
+  title: "PlayerBuilder"
+paths:
+  /{kit}/{hair}/{body}/{features}:
+    get:
+      security:
+      - APIKeyHeader: []    
+      parameters:
+      - name: kit
+        in: query
+        description: The kit to search for
+        schema:
+          type: string  
+      - name: hair
+        in: query
+        description: The hair to search for
+        schema:
+          type: string  
+      - name: body
+        in: query
+        description: The body to search for
+        schema:
+          type: string  
+      - name: features
+        in: query
+        description: The features to search for
+        schema:
+          type: string                                 
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        type: aws_proxy
+        responses:
+          default:
+            statusCode: "200"
+        uri:
+          Fn::Sub: arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${PlayerBuilder.Arn}/invocations
+
+
+x-amazon-apigateway-cors:
+  allowOrigins:
+    - '*'
+  allowMethods:
+    - GET
+    - OPTIONS
+    - POST
+  allowHeaders:
+    - x-amzm-header
+    - x-apigateway-header
+    - x-api-key
+    - authorization
+    - x-amz-date
+    - content-type
+    
+x-amazon-apigateway-gateway-responses:
+  ACCESS_DENIED:
+    statusCode: 403
+    responseParameters:
+      gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+  UNAUTHORIZED:
+    statusCode: 401
+    responseParameters:
+      gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+  DEFAULT_5XX:
+    statusCode: 500
+    responseParameters:
+      gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+  MISSING_AUTHENTICATION_TOKEN:
+    statusCode: 403
+    responseParameters:
+      gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+  INVALID_API_KEY:
+    statusCode: 200
+    responseParameters:
+      gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+      gatewayresponse.header.Access-Control-Allow-Headers: "'x-api-key,content-type'"
+  RESOURCE_NOT_FOUND:
+    statusCode: 404
+    responseParameters:
+      gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+
+
+components:
+  schemas:
+    Message:
+      type: object
+      properties:
+        message:
+          type: string
+
+  securitySchemes:
+    APIKeyHeader:
+      type: apiKey
+      name: x-api-Key
+      in: header   
+           
