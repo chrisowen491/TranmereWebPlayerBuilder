@@ -10,32 +10,39 @@ paths:
       - APIKeyHeader: []    
       parameters:
       - name: kit
-        in: query
+        in: path
+        required: true
         description: The kit to search for
         schema:
-          type: string  
+          type: string
+          enum: ['1987', '1989']
       - name: hair
-        in: query
+        in: path
+        required: true
         description: The hair to search for
         schema:
-          type: string  
+          type: string
+          enum: ['simple', 'buzzcut', 'side-parting']          
       - name: body
-        in: query
+        in: path
+        required: true
         description: The body to search for
         schema:
-          type: string  
+          type: string
+          enum: ['option1', 'option2']          
       - name: features
-        in: query
+        in: path
+        required: true
         description: The features to search for
         schema:
-          type: string                                 
+          type: string
+          enum: ['none', 'stubble']          
       responses:
         200:
           description: "OK"
           content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Message"
+            image/svg+xml:
+              {}
       x-amazon-apigateway-integration:
         httpMethod: POST
         type: aws_proxy
@@ -90,13 +97,6 @@ x-amazon-apigateway-gateway-responses:
 
 
 components:
-  schemas:
-    Message:
-      type: object
-      properties:
-        message:
-          type: string
-
   securitySchemes:
     APIKeyHeader:
       type: apiKey
