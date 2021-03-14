@@ -4,7 +4,7 @@ info:
   version: "1.0"
   title: "PlayerBuilder"
 paths:
-  /{kit}/{hair}/{body}/{features}:
+  /{kit}/{hair}/{body}/{features}/{hairColour}/{neckColour}:
     get:
       security:
       - APIKeyHeader: []    
@@ -26,10 +26,9 @@ paths:
       - name: body
         in: path
         required: true
-        description: The body to search for
+        description: The body to draw
         schema:
-          type: string
-          enum: ['option1', 'option2']          
+          type: string        
       - name: features
         in: path
         required: true
@@ -37,6 +36,18 @@ paths:
         schema:
           type: string
           enum: ['none', 'stubble']          
+      - name: hairColour
+        in: path
+        required: true
+        description: The colour of hair
+        schema:
+          type: string
+      - name: neckColour
+        in: path
+        required: true
+        description: The colour of the neck
+        schema:
+          type: string          
       responses:
         200:
           description: "OK"
