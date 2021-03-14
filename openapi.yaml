@@ -4,7 +4,7 @@ info:
   version: "1.0"
   title: "PlayerBuilder"
 paths:
-  /{kit}/{hair}/{body}/{features}/{hairColour}/{neckColour}:
+  /{kit}/{hair}/{body}/{features}/{hairColour}/{neckColour}/{background}/{highlights}:
     get:
       security:
       - APIKeyHeader: []    
@@ -47,7 +47,19 @@ paths:
         required: true
         description: The colour of the neck
         schema:
-          type: string          
+          type: string    
+      - name: background
+        in: path
+        required: true
+        description: The background colour
+        schema:
+          type: string   
+      - name: highlights
+        in: path
+        required: true
+        description: The highlights colour for the hair
+        schema:
+          type: string                             
       responses:
         200:
           description: "OK"

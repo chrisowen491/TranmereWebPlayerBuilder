@@ -72,7 +72,7 @@ Resources:
         PageRequest:
           Type: Api
           Properties:
-            Path: /{kit}/{hair}/{body}/{features}/{hairColour}/{neckColour}
+            Path: /{kit}/{hair}/{body}/{features}/{hairColour}/{neckColour}/{background}/{highlights}
             RestApiId: !Ref RestApi
             Method: get
 

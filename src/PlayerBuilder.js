@@ -1,26 +1,25 @@
-var fs = require("fs");
+const fs = require("fs");
 
 exports.handler = async function (event, context) {
     console.log('Received event:', event);
-    var kitName = event.pathParameters.kit;
-    var hairName = event.pathParameters.hair;
-    var featureName = event.pathParameters.features;
 
-    var start = '<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">';
-    var background = '<g stroke="null"><title>background</title><rect fill="#b2b2b2" id="canvas_background" height="514" width="514" y="-1" x="-1"/></g>'
-    var end = "</svg>"
+    const start = '<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">';
+    const background = `<g><title>background</title><rect fill="${event.pathParameters.background}" id="canvas_background" height="514" width="514" y="-1" x="-1"/></g>`
+    const end = "</svg>"
 
-    var body = fs.readFileSync(`./assets/body.svg`, {encoding: 'utf8'}).replace(start,"").replace(end,"");
-    var hair = fs.readFileSync(`./assets/hair/${hairName}.svg`, {encoding: 'utf8'}).replace(start,"").replace(end,"");;
-    var features = fs.readFileSync(`./assets/features/${featureName}.svg`, {encoding: 'utf8'}).replace(start,"").replace(end,"");;
-    var kit = fs.readFileSync(`./assets/kits/home/${kitName}.svg`, {encoding: 'utf8'}).replace(start,"").replace(end,"");;
-    var collar = fs.readFileSync(`./assets/kits/home/collars/${kitName}.svg`, {encoding: 'utf8'}).replace(start,"").replace(end,"");;
+    const body = fs.readFileSync(`./assets/body.svg`, {encoding: 'utf8'}).replace(start,"").replace(end,"");
+    const hair = fs.readFileSync(`./assets/hair/${event.pathParameters.hair}.svg`, {encoding: 'utf8'}).replace(start,"").replace(end,"");;
+    const hairBg = fs.existsSync(`./assets/hair/bg/${event.pathParameters.hair}.svg`) ? fs.readFileSync(`./assets/hair/bg/${event.pathParameters.hair}.svg`, {encoding: 'utf8'}).replace(start,"").replace(end,"") : null;
+    const features = fs.readFileSync(`./assets/features/${event.pathParameters.features}.svg`, {encoding: 'utf8'}).replace(start,"").replace(end,"");;
+    const kit = fs.readFileSync(`./assets/kits/home/${event.pathParameters.kit}.svg`, {encoding: 'utf8'}).replace(start,"").replace(end,"");;
+    const collar = fs.existsSync(`./assets/kits/home/collars/${event.pathParameters.kit}.svg`) ? fs.readFileSync(`./assets/kits/home/collars/${event.pathParameters.kit}.svg`, {encoding: 'utf8'}).replace(start,"").replace(end,"") : null;
 
-    var svg = start + background + kit + body + hair + features + collar + end;
+    var svg = `${start}${background}${hairBg}${kit}${body}${hair}${features}${collar}${end}`;
 
-    svg = svg.replace(/#SKIN/g, '#' + event.pathParameters.body);    
-    svg = svg.replace(/#HAIR/g, '#' + event.pathParameters.hairColour);    
-    svg = svg.replace(/#NECK/g, '#' + event.pathParameters.neckColour);   
+    svg = svg.replace(/#SKIN/g, `#${event.pathParameters.body}`);    
+    svg = svg.replace(/#HAIR/g, `#${event.pathParameters.hairColour}`);    
+    svg = svg.replace(/#NECK/g, `#${event.pathParameters.neckColour}`);  
+    svg = svg.replace(/#HIGHLIGHTS/g, `#${event.pathParameters.highlights}`);   
 
     return {
         "headers": { "Content-Type": "image/svg+xml", "Access-Control-Allow-Origin": "*"},
