@@ -22,7 +22,11 @@ exports.handler = async function (event, context) {
     svg = svg.replace(/#HIGHLIGHTS/g, `#${event.pathParameters.highlights}`);   
 
     return {
-        "headers": { "Content-Type": "image/svg+xml", "Access-Control-Allow-Origin": "*"},
+        "headers": { 
+            "Content-Type": "image/svg+xml", 
+            "Access-Control-Allow-Origin": "*",
+            "Cache-Control": "public"
+        },
         "statusCode": 200,
         "body": svg
      };
