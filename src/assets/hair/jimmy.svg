@@ -1,0 +1,9 @@
+<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
+
+  <g id="balding">
+   <path d="m162,92.36747l0,45.63253l28.46154,-42.59036s34.56044,7.30121 64.03846,7.30121s64.03846,-7.30121 64.03846,-7.30121l28.46154,42.59036l0,-45.63253c0,-30.57866 -41.41358,-55.36747 -92.5,-55.36747c-51.08643,0 -92.5,24.78881 -92.5,55.36747z" fill="#HAIR" id="svg_5"/>
+   <ellipse fill="#SKIN" stroke-width="null" stroke-opacity="null" fill-opacity="null" cx="254.5" cy="98.45313" rx="64.03846" ry="20"/>
+   <ellipse fill="#HAIR" stroke-width="null" stroke-opacity="null" cx="249.92582" cy="86.95313" rx="25.92033" ry="26.5"/>
+  </g>
+
+</svg>
