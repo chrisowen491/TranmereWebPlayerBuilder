@@ -1,14 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Transform:
-  - AWS::Serverless-2016-10-31
-  - Name: DatadogServerless
-    Parameters:
-      stackName: !Ref "AWS::StackName"
-      apiKey: !Ref DDApiKey
-      nodeLayerVersion: 59
-      extensionLayerVersion: 9
-      service: !Ref "AWS::StackName"
-      env: !Ref EnvName
+Transform: AWS::Serverless-2016-10-31
 Description: >
   The tranmere web player builder stack
 
@@ -24,7 +15,7 @@ Parameters:
   S3BucketName:
     Type: String
   DDApiKey:
-    Type: String
+    Type: String    
   OpenAPIFile:
     Type: String
     Default: openapi.yaml
@@ -150,7 +141,6 @@ Resources:
       DomainName: !Sub "api.${EnvName}.tranmere-web.com"
       RestApiId: !Ref RestApi
       Stage: Prod
-
 
 Outputs:
   Endpoint:
