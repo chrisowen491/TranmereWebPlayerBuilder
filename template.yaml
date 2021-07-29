@@ -1,15 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Transform:
-  - AWS::Serverless-2016-10-31
-  - Name: DatadogServerless
-    Parameters:
-      stackName: !Ref "AWS::StackName"
-      apiKey: b0be004b93ab8e9cde7d996357fd1d54
-      nodeLayerVersion: 59
-      extensionLayerVersion: 9
-      service: !Ref "AWS::StackName"
-      env: !Ref EnvName
-
+Transform: AWS::Serverless-2016-10-31
 Description: >
   The tranmere web player builder stack
 
@@ -68,7 +58,7 @@ Resources:
     Properties:
       CodeUri: src
       Handler: PlayerBuilder.handler
-      Runtime: nodejs14.x
+      Runtime: nodejs12.x
       DeploymentPreference:
         Type: !Ref Deployment
         Alarms:
@@ -149,6 +139,7 @@ Resources:
       DomainName: !Sub "api.${EnvName}.tranmere-web.com"
       RestApiId: !Ref RestApi
       Stage: Prod
+
 
 Outputs:
   Endpoint:
