@@ -4,9 +4,11 @@ Transform:
   - Name: DatadogServerless
     Parameters:
       stackName: !Ref "AWS::StackName"
-      apiKey: "b0be004b93ab8e9cde7d996357fd1d54"
-      nodeLayerVersion: "62"
-      extensionLayerVersion: "9"
+      apiKey: b0be004b93ab8e9cde7d996357fd1d54
+      nodeLayerVersion: 62
+      extensionLayerVersion: 9
+      service: !Ref "AWS::StackName"
+      env: !Ref EnvName
 
 Description: >
   The tranmere web player builder stack
