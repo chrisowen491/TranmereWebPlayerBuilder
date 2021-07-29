@@ -5,7 +5,7 @@ Transform:
     Parameters:
       stackName: !Ref "AWS::StackName"
       apiKey: b0be004b93ab8e9cde7d996357fd1d54
-      nodeLayerVersion: 62
+      nodeLayerVersion: 59
       extensionLayerVersion: 9
       service: !Ref "AWS::StackName"
       env: !Ref EnvName
