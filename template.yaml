@@ -1,5 +1,13 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Transform: AWS::Serverless-2016-10-31
+Transform:
+  - AWS::Serverless-2016-10-31
+  - Name: DatadogServerless
+    Parameters:
+      stackName: !Ref "AWS::StackName"
+      apiKey: "b0be004b93ab8e9cde7d996357fd1d54"
+      nodeLayerVersion: "62"
+      extensionLayerVersion: "9"
+
 Description: >
   The tranmere web player builder stack
 
@@ -139,22 +147,6 @@ Resources:
       DomainName: !Sub "api.${EnvName}.tranmere-web.com"
       RestApiId: !Ref RestApi
       Stage: Prod
-
-Transform:
-  - AWS::Serverless-2016-10-31
-  - Name: DatadogCfnMacro
-      Parameters:
-      # Send custom metrics via logs with the help of Datadog Forwarder Lambda function (recommended). Defaults to false.
-      flushMetricsToLogs: true
-      # Enable tracing on Lambda function using dd-trace, Datadog's APM library. Requires Datadog Log Forwarder to be set up. Defaults to true.
-      enableDDTracing: true
-       # When set, the macro will try to subscribe the Lambda's CloudWatch log groups to the Forwarder with the given ARN.
-      forwarderArn: "arn:aws:lambda:<REGION>:<ACCOUNT-ID>:function:datadog-forwarder"
-      # The name of the CloudFormation stack being deployed. Only required when a forwarderArn is provided and Lambda functions are dynamically named (when the `FunctionName` property isn't provided for a Lambda). 
-      stackName: !Ref "AWS::StackName"
-      # When set, the macro will add a `service` tag to all Lambda functions with the provided value.
-      service: "my-sam-app"
-      [...]
 
 Outputs:
   Endpoint:
