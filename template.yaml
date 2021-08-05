@@ -1,5 +1,12 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Transform: AWS::Serverless-2016-10-31
+Transform:
+  - AWS::Serverless-2016-10-31
+  - Name: DatadogServerless
+    Parameters:
+      stackName: !Ref "AWS::StackName"
+      addLayers: false
+      env: !Ref EnvName
+      site: datadoghq.eu
 Description: >
   The tranmere web player builder stack
 
@@ -13,9 +20,7 @@ Parameters:
     Type: String
     Default: Canary10Percent5Minutes
   S3BucketName:
-    Type: String
-  DDApiKey:
-    Type: String    
+    Type: String   
   OpenAPIFile:
     Type: String
     Default: openapi.yaml
@@ -60,13 +65,13 @@ Resources:
     Properties:
       CodeUri: src
       Handler: PlayerBuilder.handler
-      Runtime: nodejs12.x
+      Runtime: nodejs14.x
       DeploymentPreference:
         Type: !Ref Deployment
         Alarms:
           - !Ref AliasErrorMetricGreaterThanZeroAlarm
           - !Ref LatestVersionErrorMetricGreaterThanZeroAlarm
-      Tracing: Active  
+      Tracing: PassThrough  
       Environment:
         Variables:
           EnvironmentName: !Ref EnvName
