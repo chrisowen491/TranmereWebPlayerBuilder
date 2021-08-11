@@ -25,7 +25,7 @@ exports.handler = async function (event, context) {
         "headers": { 
             "Content-Type": "image/svg+xml", 
             "Access-Control-Allow-Origin": "*",
-            "Cache-Control": "Cache-Control: public, max-age=604800"
+            "Cache-Control": "Cache-Control: public,"
         },
         "statusCode": 200,
         "body": svg
