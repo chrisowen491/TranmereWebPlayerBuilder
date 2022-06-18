@@ -5,8 +5,11 @@ Transform:
     Parameters:
       stackName: !Ref "AWS::StackName"
       addLayers: true
+      forwarderArn: !Ref DDFORWARDERARN
       env: !Ref EnvName
-      nodeLayerVersion: 59
+      nodeLayerVersion: 78
+      service: !Ref Service
+      version: !Ref Version
 Description: >
   The tranmere web player builder stack
 
@@ -24,6 +27,12 @@ Parameters:
   OpenAPIFile:
     Type: String
     Default: openapi.yaml
+  Version:
+    Type: String
+  Service:
+    Type: String 
+  DDFORWARDERARN:
+    Type: String        
   EnvName:
     Type: String
     Default: sit1
